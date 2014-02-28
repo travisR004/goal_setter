@@ -28,7 +28,7 @@ feature "users" do
     click_on "Edit Goal"
     fill_in "Details", with: "Updated Goal"
     click_on "Update Goal"
-    expect(page).to_not have_content "Updated Goal"
+    expect(page).to have_content "Updated Goal"
   end
 
   it "can destroy its own goals" do

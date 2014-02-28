@@ -9,6 +9,7 @@ class GoalsController < ApplicationController
   def complete
     @goal = Goal.find(params[:goal_id])
     @goal.completed = true
+    @goal.save
     redirect_to user_goal_url(current_user.id, @goal)
   end
 
