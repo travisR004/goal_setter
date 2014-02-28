@@ -1,0 +1,32 @@
+<form action="<%= (goal.persisted? ? user_goal_url(current_user.id, goal) : goals_url) %>" method="post" >
+
+<% if goal.persisted? %>
+  <input type="hidden" name="_method" value="PATCH">
+  <% end %>
+
+  <input type="hidden"
+  name="authenticity_token"
+  value="<%= form_authenticity_token %>">
+  <Label>Title
+    <input type="text" name="goal[title]" value="<%= goal.title %>">
+  </label>
+
+  <Label>Details
+    <input type="text" name="goal[details]" value="<%= goal.details %>">
+  </label><br>
+
+<label>Public
+  <input type="radio" name="goal[pub_priv]"
+  value="Public" <%= "Checked" if goal.persisted? %> > </label><br>
+  <label>Private
+  <input type="radio" name="goal[pub_priv]"
+  value="Private" <%= "Checked" if goal.persisted? %> </label> <br>
+
+  <input type="submit"
+  <% if goal.persisted? %>
+  value="Update Goal"
+  <% else %>
+  value="Create Goal"
+  <% end %>
+    >
+</form>

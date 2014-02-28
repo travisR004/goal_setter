@@ -1,0 +1,11 @@
+<h1><%= @goal.title %></h1>
+<%= @goal.details %>
+<% if current_user.id == @goal.user_id && @goal.completed != true %>
+  <%= button_to "Complete!", user_goal_complete_url(current_user, @goal) %>
+<% else %>
+  <p>Congratulations on completing your goal</p>
+<% end %>
+
+
+<%= link_to "Edit Goal", edit_user_goal_url(current_user, @goal) %>
+<%= button_to "Destroy Goal", goal_url(@goal), method: :delete %>
