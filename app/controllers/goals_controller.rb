@@ -1,14 +1,14 @@
 class GoalsController < ApplicationController
   before_action :require_logged_in, except: [:index]
   before_action :get_goal, except: [:index, :new, :create, :complete]
-
+  before_action :require_ownership, except: [:index, :new, :create, :complete]
   def new
     @goal = Goal.new
   end
 
   def complete
     @goal = Goal.find(params[:goal_id])
-    @goal.completed = true
+    @goal.completed = true if @goal.user_id = current_user.id
     @goal.save
     redirect_to user_goal_url(current_user.id, @goal)
   end
@@ -39,7 +39,8 @@ class GoalsController < ApplicationController
   end
 
   def index
-    @goals = Goal.all.where("pub_priv = ? or user_id = ? ", "Public", current_user.id)
+    @goals = Goal.all
+            .where("pub_priv = ? or user_id = ? ", "Public", current_user.try(:id))
   end
 
   def destroy
@@ -50,6 +51,10 @@ class GoalsController < ApplicationController
   private
   def goal_params
     params.require(:goal).permit(:title, :details, :pub_priv)
+  end
+
+  def require_ownership
+    redirect_to root_url unless current_user.id == @goal.user_id
   end
 
   def get_goal

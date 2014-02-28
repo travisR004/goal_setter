@@ -2,8 +2,10 @@
 <%= @goal.details %>
 <% if current_user.id == @goal.user_id && @goal.completed != true %>
   <%= button_to "Complete!", user_goal_complete_url(current_user, @goal) %>
+<% elsif @goal.completed == true %>
+  <p>Congratulations! This Goal is complete</p>
 <% else %>
-  <p>Congratulations on completing your goal</p>
+  <p>Keep on working</p>
 <% end %>
 
 
