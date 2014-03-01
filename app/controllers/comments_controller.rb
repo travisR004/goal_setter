@@ -1,14 +1,21 @@
 class CommentsController < ApplicationController
+  before_action :require_logged_in
 
   def create
     @comment = current_user.made_comments.new(comment_params)
-    set_commentable 
+    set_commentable
     if @comment.save
       check_commentable_type
     else
       flash[:errors] = @comment.errors.full_messages
       check_commentable_type
     end
+  end
+
+  def destroy
+    @comment = Comment.find(params[:id])
+    check_commentable_type
+    @comment.destroy
   end
 
   private

@@ -8,12 +8,7 @@
   <p>Keep on working</p>
 <% end %>
 
-<ul>
-<% @goal.comments.each do |comment| %>
-  <li><%= comment.body %><br>
-    From: <%= comment.author.username %></li><br>
-<% end %>
-</ul>
+<%= render 'comments/source_comments', source: @goal %>
 
 <%= link_to "Edit Goal", edit_goal_url(@goal) %>
 <%= button_to "Destroy Goal", goal_url(@goal), method: :delete %>

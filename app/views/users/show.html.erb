@@ -7,14 +7,7 @@
 <% end %>
 </ul>
 
-<ul>
-<% @user.comments.each do |comment| %>
-  <li><%= comment.body %><br>
-    From: <%= comment.author.username %></li><br>
-<% end %>
-</ul>
-
-<h2>Add Comment</h2>
+<%= render 'comments/source_comments', source: @goal %>
 
 <h2>Add Comment</h2>
 <% type = "User" %>

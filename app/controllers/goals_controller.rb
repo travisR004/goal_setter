@@ -1,14 +1,15 @@
 class GoalsController < ApplicationController
   before_action :require_logged_in, except: [:index]
   before_action :get_goal, except: [:index, :new, :create, :complete]
-  before_action :require_ownership, except: [:index, :new, :create, :complete, :show]
+  before_action :require_ownership, only: [:edit, :update, :destroy]
+
   def new
     @goal = Goal.new
   end
 
   def complete
     @goal = Goal.find(params[:goal_id])
-    @goal.completed = true if @goal.user_id = current_user.id
+    @goal.completed = true if @goal.user_id == current_user.id
     @goal.save
     redirect_to goal_url(@goal)
   end

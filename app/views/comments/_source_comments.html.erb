@@ -1,0 +1,8 @@
+<ul>
+<% source.comments.each do |comment| %>
+  <li><%= comment.body %><br>
+    From: <%= comment.author.username %>
+  <%= button_to "Remove Comment", comment_url, method: :delete %>
+  </li><br>
+<% end %>
+</ul>
