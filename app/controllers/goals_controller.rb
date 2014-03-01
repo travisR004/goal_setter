@@ -1,7 +1,7 @@
 class GoalsController < ApplicationController
   before_action :require_logged_in, except: [:index]
   before_action :get_goal, except: [:index, :new, :create, :complete]
-  before_action :require_ownership, except: [:index, :new, :create, :complete]
+  before_action :require_ownership, except: [:index, :new, :create, :complete, :show]
   def new
     @goal = Goal.new
   end
@@ -10,7 +10,7 @@ class GoalsController < ApplicationController
     @goal = Goal.find(params[:goal_id])
     @goal.completed = true if @goal.user_id = current_user.id
     @goal.save
-    redirect_to user_goal_url(current_user.id, @goal)
+    redirect_to goal_url(@goal)
   end
 
   def show
@@ -19,7 +19,7 @@ class GoalsController < ApplicationController
   def create
     @goal = current_user.goals.new(goal_params)
     if @goal.save
-      redirect_to user_goal_url(current_user.id, @goal)
+      redirect_to goal_url(@goal)
     else
       flash.now[:errors] = @goal.errors.full_messages
       render :new
@@ -31,7 +31,7 @@ class GoalsController < ApplicationController
 
   def update
     if @goal.update_attributes(goal_params)
-      redirect_to user_goal_url(current_user.id, @goal)
+      redirect_to goal_url(@goal)
     else
       flash.now[:errors] = @goal.errors.full_messages
       render :edit
@@ -40,7 +40,8 @@ class GoalsController < ApplicationController
 
   def index
     @goals = Goal.all
-            .where("pub_priv = ? or user_id = ? ", "Public", current_user.try(:id))
+                 .where("pub_priv = ? or user_id = ? ",
+                        "Public", current_user.try(:id))
   end
 
   def destroy

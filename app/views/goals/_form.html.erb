@@ -1,4 +1,4 @@
-<form action="<%= (goal.persisted? ? user_goal_url(current_user.id, goal) : goals_url) %>" method="post" >
+<form action="<%= (goal.persisted? ? goal_url(goal) : goals_url) %>" method="post" >
 
 <% if goal.persisted? %>
   <input type="hidden" name="_method" value="PATCH">

@@ -1,13 +1,23 @@
 <h1><%= @goal.title %></h1>
 <%= @goal.details %>
 <% if current_user.id == @goal.user_id && @goal.completed != true %>
-  <%= button_to "Complete!", user_goal_complete_url(current_user, @goal) %>
+  <%= button_to "Complete!", goal_complete_url(@goal) %>
 <% elsif @goal.completed == true %>
   <p>Congratulations! This Goal is complete</p>
 <% else %>
   <p>Keep on working</p>
 <% end %>
 
+<ul>
+<% @goal.comments.each do |comment| %>
+  <li><%= comment.body %><br>
+    From: <%= comment.author.username %></li><br>
+<% end %>
+</ul>
 
-<%= link_to "Edit Goal", edit_user_goal_url(current_user, @goal) %>
+<%= link_to "Edit Goal", edit_goal_url(@goal) %>
 <%= button_to "Destroy Goal", goal_url(@goal), method: :delete %>
+
+<h2>Add Comment</h2>
+<% type = "Goal" %>
+<%= render 'comments/form', type: type, source: @goal%>

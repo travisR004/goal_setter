@@ -1,0 +1,14 @@
+<form
+  action="<%= type == "Goal" ? goal_comments_url(source) : user_comments_url(source) %>"
+  method="post">
+
+  <input type="hidden"
+  name="authenticity_token"
+  value="<%= form_authenticity_token %>">
+
+  <label>Comment
+    <input type="text" name="comment[body]">
+  </label>
+
+  <p><input type="submit" value="Add Comment"></p>
+</form>
