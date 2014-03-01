@@ -25,9 +25,7 @@ end
 feature "Log In" do
   before(:each) do
     visit new_user_url
-    fill_in 'Username', with: "test_user"
-    fill_in 'Password', with: "password"
-    click_on "Sign Up"
+
     click_on "Sign Out"
     fill_in 'Username', with: "test_user"
     fill_in 'Password', with: "password"
@@ -47,10 +45,7 @@ feature "Log Out" do
   end
 
   it "doesn't show username after logout" do
-    visit new_user_url
-    fill_in 'Username', with: "test_user"
-    fill_in 'Password', with: "password"
-    click_on "Sign Up"
+    sign_up
     click_on "Sign Out"
     visit root_url
     expect(page).to_not have_content "test_user"

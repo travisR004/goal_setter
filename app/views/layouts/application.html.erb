@@ -5,6 +5,32 @@
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
+  <style>
+
+   body{
+     font-family: verdana;
+     color: black;
+     font-weight: bold;
+     background-image:  url('http://2.bp.blogspot.com/-enrtdN15nr0/Utgk96v_7CI/AAAAAAAAAEk/k9l_CBlGOzw/s1600/trophy2.png');
+     opacity: 0.8;
+     filter: alph(opacity=80);
+   }
+
+   #outer-container {
+   width: 100%;
+   opacity: 0.9;
+   filter: alpha(opacity=90);
+   }
+
+   #inner-container{
+     width: 60%;
+     margin: 20px auto;
+     border: 2px solid #ccc;
+     border-radius: 5px;
+     padding: 10px;
+     background: white;
+   }
+   </style>
 </head>
 <body>
 <% if logged_in? %>
@@ -14,11 +40,14 @@
   <%= link_to "Log In", new_session_url %>
 <% end %>
 
-<% if flash[:errors] %>
-  <%= flash[:errors].join(", ") %>
-<% end %>
-
-<%= yield %>
+<div id="outer-container">
+    <div id="inner-container">
+			<% if flash[:error] %>
+				<%= flash[:error].join(", ") %>
+			<% end %>
+      <%= yield %>
+    </div>
+  </div>
 
 </body>
 </html>

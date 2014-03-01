@@ -2,10 +2,7 @@ require 'spec_helper'
 
 feature "Comment" do
   before(:each) do
-    visit new_user_url
-    fill_in 'Username', with: "test_user"
-    fill_in 'Password', with: "password"
-    click_on "Sign Up"
+    sign_up
     visit new_goal_url
     fill_in "Title", with: "Test Goal"
     fill_in "Details", with: "Lorem Ipsum"
